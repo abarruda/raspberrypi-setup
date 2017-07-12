@@ -1,7 +1,9 @@
 #!/bin/bash
 set -e
 
-source docker-compose.sh
+source docker/docker.sh
+source docker/docker-compose.sh
+source network/network.sh
 
 echo "Specify hostname:"
 read hostname
@@ -34,39 +36,9 @@ then
 	apt-get autoremove;
 	apt-get autoclean;
 
-	raspi-config nonint do_hostname $hostname
-
-	echo "# interfaces(5) file used by ifup(8) and ifdown(8)
-
-# Please note that this file is written to be used with dhcpcd
-# For static IP, consult /etc/dhcpcd.conf and 'man dhcpcd.conf'
-
-# Include files from /etc/network/interfaces.d:
-source-directory /etc/network/interfaces.d
-
-auto lo
-iface lo inet loopback
-
-iface eth0 inet static
-	address $ip
-	netmask 255.255.255.0
-	gateway 192.168.1.1
-
-allow-hotplug wlan0
-iface wlan0 inet manual
-    wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
-
-allow-hotplug wlan1
-iface wlan1 inet manual
-    wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf" > /etc/network/interfaces
-
-	echo "Disable the DHCP client daemon and switch to standard Debian networking..."
-	systemctl disable dhcpcd
-	systemctl enable networking
-
-	echo "Installing Docker"
-	curl -sSL https://get.docker.com | sh;
-
+	network_setup
+	
+	docker_install
 	docker_compose_install
 fi
 

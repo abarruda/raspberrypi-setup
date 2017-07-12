@@ -5,9 +5,9 @@ function docker_compose_install {
 	git clone https://github.com/docker/compose.git
 
 	cd compose
-	cp Dockerfile Dockerfile.armhf
-	sed -i -e 's/^FROM debian\:/FROM armhf\/debian:/' Dockerfile.armhf
-	sed -i -e 's/x86_64/armel/g' Dockerfile.armhf
+	# cp Dockerfile Dockerfile.armhf
+	# sed -i -e 's/^FROM debian\:/FROM armhf\/debian:/' Dockerfile.armhf
+	# sed -i -e 's/x86_64/armel/g' Dockerfile.armhf
 
 	docker build -t docker-compose:armhf -f Dockerfile.armhf .
 	docker run --rm --entrypoint="script/build/linux-entrypoint" -v $(pwd)/dist:/code/dist -v $(pwd)/.git:/code/.git "docker-compose:armhf"
