@@ -20,6 +20,9 @@ then
 	echo "Updating firmware..."
 	rpi-update
 
+	echo "Reducing GPU memory to 16MB..."
+	sudo raspi-config nonint do_memory_split 16
+
 	export LANGUAGE=en_US.UTF-8
 	export LANG=en_US.UTF-8
 	export LC_ALL=en_US.UTF-8

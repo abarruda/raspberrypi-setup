@@ -1,4 +1,4 @@
 function docker_install {
-	echo "Installing Docker"
+	echo "Installing Docker..."
 	sudo -u pi curl -sSL https://get.docker.com | sh;
 }
