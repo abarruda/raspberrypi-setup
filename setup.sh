@@ -43,5 +43,7 @@ then
 	
 	docker_install
 	docker_compose_install
+
+	echo "A reboot is strongly suggested."
 fi
 
